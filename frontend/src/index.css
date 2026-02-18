@@ -1,0 +1,62 @@
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg-dark: #0f172a;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input, select, textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: white;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--primary);
+}
