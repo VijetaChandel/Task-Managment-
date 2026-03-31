@@ -38,7 +38,7 @@ const Dashboard = () => {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/projects', {
+            const res = await axios.get('https://task-managment-hf48.onrender.com/api/projects', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setProjects(res.data);
@@ -47,7 +47,7 @@ const Dashboard = () => {
 
     const fetchTasks = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/tasks', {
+            const res = await axios.get('https://task-managment-hf48.onrender.com/api/tasks', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(res.data);
@@ -56,7 +56,7 @@ const Dashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/tasks/stats', {
+            const res = await axios.get('https://task-managment-hf48.onrender.com/api/tasks/stats', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setStats(res.data);
@@ -65,7 +65,7 @@ const Dashboard = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/auth/users', {
+            const res = await axios.get('https://task-managment-hf48.onrender.com/api/auth/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setAllUsers(res.data.filter(u => u.role === 'Developer'));
@@ -83,13 +83,13 @@ const Dashboard = () => {
                     assignedTo: formData.tasks[0].assignedTo,
                     project: formData.project
                 };
-                await axios.patch(`http://localhost:5000/api/tasks/${currentTaskId}`, taskData, {
+                await axios.patch(`https://task-managment-hf48.onrender.com/api/tasks/${currentTaskId}`, taskData, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } else {
                 // Bulk Creation
                 const promises = formData.tasks.map(task =>
-                    axios.post('http://localhost:5000/api/tasks', {
+                    axios.post('https://task-managment-hf48.onrender.com/api/tasks', {
                         ...task,
                         project: formData.project
                     }, { headers: { Authorization: `Bearer ${token}` } })
@@ -114,7 +114,7 @@ const Dashboard = () => {
 
     const handleAddComment = async (taskId, text) => {
         try {
-            await axios.post(`http://localhost:5000/api/tasks/${taskId}/comments`, { text }, {
+            await axios.post(`https://task-managment-hf48.onrender.com/api/tasks/${taskId}/comments`, { text }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchTasks();
@@ -150,7 +150,7 @@ const Dashboard = () => {
     const handleDeleteTask = async (id) => {
         if (!window.confirm('Are you sure you want to delete this task?')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/tasks/${id}`, {
+            await axios.delete(`https://task-managment-hf48.onrender.com/api/tasks/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchTasks(); fetchStats();
@@ -160,7 +160,7 @@ const Dashboard = () => {
     const handleDeleteUser = async (id) => {
         if (!window.confirm('Delete this developer?')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/auth/users/${id}`, {
+            await axios.delete(`https://task-managment-hf48.onrender.com/api/auth/users/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchUsers();
@@ -170,7 +170,7 @@ const Dashboard = () => {
     const handleProjectSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/projects', projectFormData, {
+            await axios.post('https://task-managment-hf48.onrender.com/api/projects', projectFormData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert('Project Created!');
@@ -182,7 +182,7 @@ const Dashboard = () => {
     const handleDeleteProject = async (id) => {
         if (!window.confirm('Delete this project? (Tasks will remain but might break)')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/projects/${id}`, {
+            await axios.delete(`https://task-managment-hf48.onrender.com/api/projects/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchProjects();
@@ -308,7 +308,7 @@ const Dashboard = () => {
                             filteredTasks.map(task => (
                                 <TaskCard key={task._id} task={task}
                                     onUpdateStatus={async (id, status) => {
-                                        await axios.patch(`http://localhost:5000/api/tasks/${id}/status`, { status }, { headers: { Authorization: `Bearer ${token}` } });
+                                        await axios.patch(`https://task-managment-hf48.onrender.com/api/tasks/${id}/status`, { status }, { headers: { Authorization: `Bearer ${token}` } });
                                         fetchTasks(); fetchStats();
                                     }}
                                     onDelete={handleDeleteTask}
