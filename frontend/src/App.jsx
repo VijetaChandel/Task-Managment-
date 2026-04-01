@@ -7,8 +7,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 
 const PrivateRoute = ({ children }) => {
-    const { token } = useAuth();
-    return token ? children : <Navigate to="/login" />;
+    const { token, user } = useAuth();
+    return (token && user) ? children : <Navigate to="/login" />;
 };
 
 function App() {
