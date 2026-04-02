@@ -23,15 +23,8 @@ const Register = () => {
     };
 
     return (
-        <div style={{
-            height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'radial-gradient(circle at bottom right, #1e293b, #0f172a)'
-        }}>
-            <div className="glass" style={{
-                padding: '40px 50px', width: '480px', textAlign: 'center',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-                border: '1px solid rgba(255,255,255,0.1)'
-            }}>
+        <div className="auth-container" style={{ background: 'radial-gradient(circle at bottom right, #1e293b, #0f172a)' }}>
+            <div className="glass auth-card">
                 <HandshakeAnimation />
                 <h2 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '10px', background: 'linear-gradient(to right, #10b981, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     Join the Team

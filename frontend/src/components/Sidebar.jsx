@@ -1,16 +1,25 @@
-import { LogOut, LayoutDashboard, PlusCircle, CheckCircle, Clock, Users, Folder } from 'lucide-react';
+import { LogOut, LayoutDashboard, PlusCircle, CheckCircle, Clock, Users, Folder, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const Sidebar = ({ setView, activeView }) => {
+const Sidebar = ({ setView, activeView, isMobileMenuOpen, setIsMobileMenuOpen }) => {
     const { user, logout } = useAuth();
 
     return (
-        <div className="glass" style={{ width: '260px', height: '95vh', margin: '20px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '30px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: '40px', height: '40px', background: 'var(--primary)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <LayoutDashboard color="white" size={24} />
+        <div className={`glass sidebar-container ${isMobileMenuOpen ? 'sidebar-visible' : 'sidebar-hidden'}`}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ width: '40px', height: '40px', background: 'var(--primary)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <LayoutDashboard color="white" size={24} />
+                    </div>
+                    <h2 style={{ fontSize: '18px', fontWeight: '700' }}>TaskMaster</h2>
                 </div>
-                <h2 style={{ fontSize: '18px', fontWeight: '700' }}>TaskMaster</h2>
+                <button 
+                    className="hamburger-btn" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{ padding: '4px' }}
+                >
+                    <X size={24} />
+                </button>
             </div>
 
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>

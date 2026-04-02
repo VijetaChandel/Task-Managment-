@@ -60,3 +60,163 @@ input, select, textarea {
 input:focus {
   border-color: var(--primary);
 }
+
+/* --- Responsive Utility Classes --- */
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.auth-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 640px) {
+  .auth-card {
+    padding: 30px 20px;
+  }
+}
+
+.hamburger-btn {
+  display: none;
+  background: transparent;
+  color: white;
+  padding: 8px;
+}
+
+/* Sidebar behavior */
+.sidebar-container {
+  width: 260px;
+  height: 95vh;
+  margin: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+/* Task Grid */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.header-container {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Tailwind Breakpoints --- */
+
+/* lg (1024px) */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* md (768px) - Tablet & Mobile Sidebar Hide */
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+  
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    margin: 0;
+    z-index: 100;
+    background: var(--bg-dark); /* Solid background on mobile */
+    border-radius: 0;
+  }
+
+  .sidebar-hidden {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar-visible {
+    transform: translateX(0);
+    box-shadow: 10px 0 50px rgba(0,0,0,0.8);
+  }
+
+  /* Overlay for blurring background when sidebar is open */
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 90;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+/* sm (640px) - Mobile Phone */
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .task-grid {
+    grid-template-columns: 1fr; /* Task Cards take 100% width on mobile */
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

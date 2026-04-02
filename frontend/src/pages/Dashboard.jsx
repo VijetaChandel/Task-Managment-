@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import TaskCard from '../components/TaskCard';
-import { Users, CheckCircle, Clock, AlertCircle, FilterX, LayoutDashboard } from 'lucide-react';
+import { Users, CheckCircle, Clock, AlertCircle, FilterX, LayoutDashboard, Menu, X } from 'lucide-react';
 
 const Dashboard = () => {
     const [tasks, setTasks] = useState([]);
@@ -14,6 +14,7 @@ const Dashboard = () => {
     const [allUsers, setAllUsers] = useState([]);
     const [projects, setProjects] = useState([]);
     const [projectFormData, setProjectFormData] = useState({ name: '', description: '' });
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Form states
     const [isEditing, setIsEditing] = useState(false);
@@ -194,20 +195,30 @@ const Dashboard = () => {
         : tasks.filter(t => t.status === filterStatus);
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-dark)' }}>
-            <Sidebar setView={setView} activeView={view} />
+        <div className="app-container">
+            {/* Mobile Overlay */}
+            {isMobileMenuOpen && (
+                <div className="sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)} />
+            )}
+            
+            <Sidebar setView={setView} activeView={view} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
 
-            <main style={{ flex: 1, padding: '40px', overflowY: 'auto' }}>
-                <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                        <h1 style={{ fontSize: '28px', fontWeight: '700', marginBottom: '8px' }}>
-                            {view === 'tasks' ? 'Task Board' : view === 'users' ? 'User Management' : view === 'projects' ? 'Project Management' : isEditing ? 'Edit Task' : 'New Assignment'}
-                        </h1>
-                        <p style={{ color: 'var(--text-muted)' }}>
-                            {filterStatus === 'All' ? 'Project: TaskMaster Control Center' : `Filtering by: ${filterStatus}`}
-                        </p>
+            <main className="main-content">
+                <header className="header-container">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                        <button className="hamburger-btn" onClick={() => setIsMobileMenuOpen(true)}>
+                            <Menu size={28} />
+                        </button>
+                        <div>
+                            <h1 style={{ fontSize: '28px', fontWeight: '700', marginBottom: '8px' }}>
+                                {view === 'tasks' ? 'Task Board' : view === 'users' ? 'User Management' : view === 'projects' ? 'Project Management' : isEditing ? 'Edit Task' : 'New Assignment'}
+                            </h1>
+                            <p style={{ color: 'var(--text-muted)' }}>
+                                {filterStatus === 'All' ? 'Project: TaskMaster Control Center' : `Filtering by: ${filterStatus}`}
+                            </p>
+                        </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div className="header-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         {filterStatus !== 'All' && (
                             <button onClick={() => setFilterStatus('All')} className="glass" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 15px', color: 'var(--accent)' }}>
                                 <FilterX size={16} /> Clear Filter
@@ -224,7 +235,7 @@ const Dashboard = () => {
 
                 {user.role === 'Admin' && view === 'tasks' && (
                     <>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '30px' }}>
+                        <div className="stats-grid">
                             <div
                                 onClick={() => setFilterStatus('All')}
                                 className="glass"
@@ -299,7 +310,7 @@ const Dashboard = () => {
                 )}
 
                 {view === 'tasks' ? (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+                    <div className="task-grid">
                         {filteredTasks.length === 0 ? (
                             <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '100px', color: 'var(--text-muted)' }}>
                                 <p>No tasks found for this view.</p>
