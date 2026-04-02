@@ -76,7 +76,12 @@ const Sidebar = ({ setView, activeView, isMobileMenuOpen, setIsMobileMenuOpen })
                 </div>
                 <button
                     onClick={logout}
-                    style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--danger)', padding: '12px' }}
+                    style={{ 
+                        display: 'flex', alignItems: 'center', gap: '12px', 
+                        color: 'var(--danger)', padding: '12px',
+                        position: 'relative', zIndex: 9999, cursor: 'pointer',
+                        paddingBottom: '24px' 
+                    }}
                 >
                     <LogOut size={20} /> Logout
                 </button>
