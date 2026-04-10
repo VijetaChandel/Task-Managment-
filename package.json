@@ -1,0 +1,13 @@
+{
+  "name": "task-management-app",
+  "version": "1.0.0",
+  "description": "Full stack task management application",
+  "main": "Backend/server.js",
+  "scripts": {
+    "build": "npm install --prefix frontend && npm run build --prefix frontend && npm install --prefix Backend",
+    "start": "node Backend/server.js",
+    "install-all": "npm install --prefix frontend && npm install --prefix Backend"
+  },
+  "author": "",
+  "license": "ISC"
+}

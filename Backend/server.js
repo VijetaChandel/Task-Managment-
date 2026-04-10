@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const projectRoutes = require('./routes/projectRoutes');
@@ -18,6 +19,25 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/projects', projectRoutes);
+
+// Static files for production
+const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(frontendPath));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(frontendPath, 'index.html'), (err) => {
+            if (err) {
+                console.error('Error sending index.html:', err);
+                res.status(500).send('Error loading frontend. Please ensure "npm run build" was successful.');
+            }
+        });
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send('API is running... (NODE_ENV is not production)');
+    });
+}
 
 // Database connection
 const mongoUri = process.env.MONGO_URI;
